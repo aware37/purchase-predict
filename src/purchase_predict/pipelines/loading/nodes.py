@@ -2,9 +2,9 @@
 This is a boilerplate pipeline 'loading'
 generated using Kedro 1.3.1
 """
+
 import pandas as pd
 import glob
-
 from google.cloud import storage
 
 
