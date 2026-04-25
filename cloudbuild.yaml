@@ -9,4 +9,4 @@ steps:
     env:
       - "UV_CACHE_DIR=/root/.cache/uv"
 
-logs_bucket: gs://purchase_predict/logs_build_cloud_build
+logs_bucket: gs://ml_ops_final/logs_build_cloud_build
