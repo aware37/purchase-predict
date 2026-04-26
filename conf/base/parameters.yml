@@ -5,3 +5,5 @@ mlflow_experiment_id: 1
 
 gcp_project_id: "ml-ops-490613"
 gcs_primary_folder: "ml_ops_final/primary"
+
+mlflow_model_registry: "purchase_predict"
