@@ -18,6 +18,13 @@ def push_to_model_registry(registry_name: str, model_uri: str) -> str:
         raise ValueError("MLFLOW_SERVER environment variable is not set")
     mlflow.set_tracking_uri(tracking_uri)
     client = MlflowClient()
+    
+    try:
+        client.get_registered_model(registry_name)
+    except mlflow.exceptions.MlflowException:
+        client.create_registered_model(registry_name)
+
+    
     result = client.create_model_version(
         name=registry_name,
         source=model_uri,  # Pass directly, no runs:/ wrapping
