@@ -1,6 +1,6 @@
 test_ratio: 0.3
 automl_max_evals: 10
-mlflow_enabled: False
+mlflow_enabled: True
 mlflow_experiment_id: 1
 
 gcp_project_id: "ml-ops-490613"
