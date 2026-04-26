@@ -5,7 +5,7 @@ steps:
     entrypoint: /bin/sh
     args:
       - "-c"
-      - "chmod a+x install.sh && ./install.sh && uv sync && uv pip install pytest mlflow==3.0.1 && uv run pytest ."
+      - "chmod a+x install.sh && ./install.sh && uv sync && uv pip install pytest pytest-cov mlflow==3.0.1 && uv run pytest ."
     env:
       - "UV_CACHE_DIR=/root/.cache/uv"
 
