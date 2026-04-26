@@ -23,6 +23,6 @@ steps:
 
 options:
   machineType: 'N1_HIGHCPU_8'
-  timeout: 1200s
+timeout: 1200s
 
 logs_bucket: gs://ml_ops_final/logs_build_cloud_build
