@@ -18,8 +18,9 @@ from hyperopt import fmin, hp, tpe
 from lightgbm.sklearn import LGBMClassifier
 from mlflow.models import infer_signature  # ty: ignore[unresolved-import]
 from sklearn.base import BaseEstimator, clone
-from sklearn.metrics import f1_score, precision_recall_curve
+from sklearn.metrics import f1_score, precision_recall_curve, PrecisionRecallDisplay
 from sklearn.model_selection import RepeatedKFold
+
 
 warnings.filterwarnings("ignore")
 
@@ -144,7 +145,8 @@ def auto_ml(
     y = pd.concat([pd.Series(y_train_flat), pd.Series(y_test_flat)], ignore_index=True)
     opt_models = []
 
-    run_id: str = None
+    run_id: str = ""
+
     if log_to_mlflow:
         mlflow.set_tracking_uri(os.getenv("MLFLOW_SERVER", "http://localhost:5000"))
         exp_id = str(experiment_id)
@@ -209,6 +211,7 @@ def auto_ml(
 def save_pr_curve(X, y, model):
     plt.figure(figsize=(16, 11))
     prec, recall, _ = precision_recall_curve(y, model.predict_proba(X)[:, 1], pos_label=1)
+    pr_display = PrecisionRecallDisplay(precision=prec, recall=recall).plot(ax=plt.gca())
     plt.title("PR Curve", fontsize=16)
     plt.gca().xaxis.set_major_formatter(mtick.PercentFormatter(1, 0))
     plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(1, 0))
