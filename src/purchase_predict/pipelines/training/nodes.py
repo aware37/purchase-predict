@@ -146,7 +146,8 @@ def auto_ml(
     opt_models = []
 
     run_id: str = ""
-
+    model_uri: str = ""
+	
     if log_to_mlflow:
         mlflow.set_tracking_uri(os.getenv("MLFLOW_SERVER", "http://localhost:5000"))
         exp_id = str(experiment_id)
@@ -198,8 +199,8 @@ def auto_ml(
         # Only use if validation curves are produced
         mlflow.log_artifact("data/04_feature/transform_pipeline.pkl")  # ty: ignore[possibly-missing-attribute]
         mlflow.log_artifacts("data/08_reporting", artifact_path="plots")  # ty: ignore[possibly-missing-attribute]
-        mlflow_info = mlflow.sklearn.log_model(best_model["model"], name="model", signature=signature)
-
+        mlflow_info = mlflow.sklearn.log_model(best_model["model"], name="model", signature=signature, registered_model_name="purchase_predict")
+	model_uri = mlflow_info.model_uri
         mlflow.end_run()  # ty: ignore[possibly-missing-attribute]
     return {
         "model": best_model["model"],
