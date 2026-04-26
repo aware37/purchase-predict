@@ -200,7 +200,7 @@ def auto_ml(
         mlflow.log_artifact("data/04_feature/transform_pipeline.pkl")  # ty: ignore[possibly-missing-attribute]
         mlflow.log_artifacts("data/08_reporting", artifact_path="plots")  # ty: ignore[possibly-missing-attribute]
         mlflow_info = mlflow.sklearn.log_model(best_model["model"], name="model", signature=signature, registered_model_name="purchase_predict")
-	model_uri = mlflow_info.model_uri
+	model_uri = mlflow_info.model.uri
         mlflow.end_run()  # ty: ignore[possibly-missing-attribute]
     return {
         "model": best_model["model"],
