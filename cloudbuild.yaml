@@ -8,5 +8,17 @@ steps:
       - "chmod a+x install.sh && ./install.sh && uv sync && uv pip install pytest pytest-cov mlflow==3.0.1 && uv run pytest ."
     env:
       - "UV_CACHE_DIR=/root/.cache/uv"
+  - name: "ghcr.io/astral-sh/uv:python3.12-trixie-slim"
+    id: CD
+    entrypoint: /bin/bash
+    args:
+      - "-c"
+      - "chmod a+x install.sh && ./install.sh && uv run kedro run"
+    env:
+      - "ENV=$BRANCH_NAME"
+      - "MLFLOW_SERVER=$_MLFLOW_SERVER"
+      - "DO_NOT_TRACK=1"
+      - "UV_CACHE_DIR=/root/.cache/uv"
+    waitFor: ["CI"]
 
 logs_bucket: gs://ml_ops_final/logs_build_cloud_build
